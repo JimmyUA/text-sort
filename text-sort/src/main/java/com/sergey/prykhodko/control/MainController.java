@@ -19,7 +19,7 @@ public class MainController {
         consolePrinter = new ConsolePrinter();
     }
 
-    public int calculateAmountOfSentencesWithEqualWords() {
+    public void calculateAndShowAmountOfSentencesWithEqualWords() {
         int sentencesWithEqualWordsAmount = 0;
         for (Sentence sentence : sentences
              ) {
@@ -28,7 +28,7 @@ public class MainController {
             }
         }
 
-        return sentencesWithEqualWordsAmount;
+        consolePrinter.showSentencesAmountWithEqulWords(sentencesWithEqualWordsAmount);
     }
 
     private boolean containsEqualWords(Sentence sentence) {
@@ -55,5 +55,61 @@ public class MainController {
         Collections.sort(sortedSentences, wordsAmountIncreasingOrderComparator);
 
         consolePrinter.showSentences(sortedSentences);
+    }
+
+    public void findWordInFirstSentanceWichIsUnicForText() {
+        Sentence firstSentence = sentences.get(0);
+        int counter = 0;
+        Sentence currentSentence;
+        boolean isUniq;
+        for (Word word : firstSentence.getWordsAsList()
+             ) {
+            isUniq = true;
+            for (int i = 1; i < sentences.size(); i++) {
+                currentSentence = sentences.get(i);
+                if (currentSentence.getWordsAsList().contains(word)){
+                    isUniq = false;
+                    break;
+                }
+            }
+            if(isUniq) {
+                consolePrinter.showUniqWordFromFirstSentence(word);
+                counter++;
+            }
+        }
+        if (counter == 0){
+            consolePrinter.notifyNoUniqWordsInFirstSentence();
+        }
+    }
+
+
+    public void askUserDesiredWordsLength() {
+        consolePrinter.showQuestionRegardingDesiredWordsLength();
+    }
+
+    public void showAllWordsFromIterrogativeSentencesWithDesiredLength(int desiredWordsLength) {
+        for (Sentence sentence : sentences
+             ) {
+            if (sentence.isIterrogative()){
+                List<Word> wordsToShow = addAllWordsWithRequiredLength(desiredWordsLength, sentence);
+                if (!wordsToShow.isEmpty()){
+                consolePrinter.showWordsFromList(wordsToShow, desiredWordsLength);
+                }
+                else {
+                    consolePrinter.notifyNoWordsWithSuchLengthInIterrogativeSentences();
+                }
+            }
+        }
+    }
+
+    private List<Word> addAllWordsWithRequiredLength(int desiredWordsLength, Sentence sentence) {
+        List<Word> requiredWords = new ArrayList<>();
+        for (Word word : sentence.getWordsAsList()
+             ) {
+            if (word.length() == desiredWordsLength){
+                requiredWords.add(word);
+            }
+        }
+        return requiredWords;
     }
 }

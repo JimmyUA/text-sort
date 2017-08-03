@@ -7,6 +7,10 @@ public class Word implements SentenceUnit{
         this.word = word;
     }
 
+    public int length(){
+        return word.length();
+    }
+
     @Override
     public String toString() {
         return word;

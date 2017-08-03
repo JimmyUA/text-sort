@@ -37,8 +37,12 @@ public class Sentence {
         Matcher wordMatcher = wordPattern.matcher(sentence);
 
         while (wordMatcher.find()){
-            words.add(new Word(wordMatcher.group()));
+            words.add(new Word(wordMatcher.group().toLowerCase()));
         }
+    }
+
+    public boolean isIterrogative(){
+        return punctuationUnits.contains(new PunctuationUnit('?'));
     }
 
     public List<Word> getWordsAsList() {

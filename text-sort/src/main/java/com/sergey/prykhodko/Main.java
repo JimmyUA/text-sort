@@ -23,10 +23,18 @@ public class Main
         int taksNumber = scanner.nextInt();
         switch (taksNumber){
             case 1:
-                System.out.println(mainController.calculateAmountOfSentencesWithEqualWords());
+                mainController.calculateAndShowAmountOfSentencesWithEqualWords();
                 break;
             case 2:
                 mainController.showSentenceInWordsAmountIncreasingOrder();
+                break;
+            case 3:
+                mainController.findWordInFirstSentanceWichIsUnicForText();
+                break;
+            case 4:
+                mainController.askUserDesiredWordsLength();
+                int desiredWordsLength = scanner.nextInt();
+                mainController.showAllWordsFromIterrogativeSentencesWithDesiredLength(desiredWordsLength);
         }
     }
 }
