@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TextLoader {
 
-    public List<Sentence> getTextFromFile(File fileWithGoalText){
+    public static List<Sentence> getTextFromFile(File fileWithGoalText){
         List<Sentence> sentences = new ArrayList<>();
 
         try(InputStream in = new FileInputStream(fileWithGoalText)){
@@ -20,7 +20,7 @@ public class TextLoader {
 
             while ((i = in.read()) != -1){
                 builder.append((char)i);
-                if (i == 46 && builder.length() > minLength){
+                if ((i == 46 || i == 33 || i == 63) && builder.length() > minLength){
                     sentences.add(new Sentence(builder.toString().trim()));
                     builder = new StringBuilder();
                 }

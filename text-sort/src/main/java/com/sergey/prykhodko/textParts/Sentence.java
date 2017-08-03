@@ -41,6 +41,10 @@ public class Sentence {
         }
     }
 
+    public List<Word> getWordsAsList() {
+        return words;
+    }
+
     @Override
     public String toString() {
         return sentence;
