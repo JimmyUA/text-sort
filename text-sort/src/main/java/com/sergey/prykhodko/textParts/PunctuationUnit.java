@@ -1,5 +1,5 @@
 package com.sergey.prykhodko.textParts;
 
-public class PunctuationUnit {
+public class PunctuationUnit implements SentenceUnit{
     private char unit;
 }
