@@ -35,9 +35,11 @@ public class Sentence {
     private void getAllWords(){
         Pattern wordPattern = Pattern.compile(SentenceUnit.WORD_REG_EX);
         Matcher wordMatcher = wordPattern.matcher(sentence);
-
+        String match;
         while (wordMatcher.find()){
-            words.add(new Word(wordMatcher.group().toLowerCase()));
+            if ((match = wordMatcher.group()).length() > 1) {
+                words.add(new Word(wordMatcher.group().toLowerCase()));
+            }
         }
     }
 

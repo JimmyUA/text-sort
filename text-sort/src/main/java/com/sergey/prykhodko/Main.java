@@ -16,7 +16,7 @@ public class Main
     public static void main( String[] args )
     {
         Text textToWorkWith = new Text();
-        textToWorkWith.setText(TextLoader.getTextFromFile(new File("D:/test.txt")));
+        textToWorkWith.setText(TextLoader.getTextFromFile(new File("D:/COPYRIGHT")));
 
         MainController mainController = new MainController(textToWorkWith);
         Scanner scanner = new Scanner(System.in);
@@ -35,6 +35,18 @@ public class Main
                 mainController.askUserDesiredWordsLength();
                 int desiredWordsLength = scanner.nextInt();
                 mainController.showAllWordsFromIterrogativeSentencesWithDesiredLength(desiredWordsLength);
+
+            case 5:
+                mainController.changeFirstAndLastWords();
+                break;
+            case 6:
+                mainController.sortAllWordsByAlphabet();
+                break;
+            case 7:
+                mainController.sortWordsByVovelsRatio();
+                break;
+            case 8:
+                mainController.sortWordsStartsFromVovel();
         }
     }
 }

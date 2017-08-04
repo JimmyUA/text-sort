@@ -3,7 +3,9 @@ package com.sergey.prykhodko.control;
 import com.sergey.prykhodko.textParts.Sentence;
 import com.sergey.prykhodko.textParts.Word;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ConsolePrinter {
 
@@ -42,5 +44,34 @@ public class ConsolePrinter {
 
     public void notifyNoWordsWithSuchLengthInIterrogativeSentences() {
         System.out.println("No words were found");
+    }
+
+    public void showWordsInAlphabeticOrder(Set<Word> allWords) {
+        List<Word> words = new ArrayList<>(allWords);
+        System.out.println("    " + words.get(0));
+        for (int i = 1; i < words.size(); i++) {
+            String current = words.get(i).toString();
+            String previous = words.get(i-1).toString();
+            if (current.charAt(0) != previous.charAt(0)){
+                System.out.println("    " + current);
+            }
+            else {
+                System.out.println(current);
+            }
+        }
+    }
+
+    public void showWordSortedByVovelsAmount(List<Word> allWords) {
+        for (Word word : allWords
+                ) {
+            System.out.println(word + "\u001B[31m vovels amount: " + word.vovelsAmount() + "\u001B[0m");
+        }
+    }
+
+    public void showWords(List<Word> words) {
+        for (Word word : words
+             ) {
+            System.out.println(word);
+        }
     }
 }

@@ -4,10 +4,7 @@ import com.sergey.prykhodko.textParts.Sentence;
 import com.sergey.prykhodko.textParts.Text;
 import com.sergey.prykhodko.textParts.Word;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class MainController {
 
@@ -22,7 +19,7 @@ public class MainController {
     public void calculateAndShowAmountOfSentencesWithEqualWords() {
         int sentencesWithEqualWordsAmount = 0;
         for (Sentence sentence : sentences
-             ) {
+                ) {
             if (containsEqualWords(sentence)) {
                 sentencesWithEqualWordsAmount++;
             }
@@ -35,7 +32,7 @@ public class MainController {
         List<Word> words = sentence.getWordsAsList();
         for (int i = 0; i < words.size(); i++) {
             for (int j = 0; j < words.size(); j++) {
-                if (words.get(i).equals(words.get(j)) && i != j){
+                if (words.get(i).equals(words.get(j)) && i != j) {
                     return true;
                 }
             }
@@ -63,21 +60,21 @@ public class MainController {
         Sentence currentSentence;
         boolean isUniq;
         for (Word word : firstSentence.getWordsAsList()
-             ) {
+                ) {
             isUniq = true;
             for (int i = 1; i < sentences.size(); i++) {
                 currentSentence = sentences.get(i);
-                if (currentSentence.getWordsAsList().contains(word)){
+                if (currentSentence.getWordsAsList().contains(word)) {
                     isUniq = false;
                     break;
                 }
             }
-            if(isUniq) {
+            if (isUniq) {
                 consolePrinter.showUniqWordFromFirstSentence(word);
                 counter++;
             }
         }
-        if (counter == 0){
+        if (counter == 0) {
             consolePrinter.notifyNoUniqWordsInFirstSentence();
         }
     }
@@ -89,13 +86,12 @@ public class MainController {
 
     public void showAllWordsFromIterrogativeSentencesWithDesiredLength(int desiredWordsLength) {
         for (Sentence sentence : sentences
-             ) {
-            if (sentence.isIterrogative()){
+                ) {
+            if (sentence.isIterrogative()) {
                 List<Word> wordsToShow = addAllWordsWithRequiredLength(desiredWordsLength, sentence);
-                if (!wordsToShow.isEmpty()){
-                consolePrinter.showWordsFromList(wordsToShow, desiredWordsLength);
-                }
-                else {
+                if (!wordsToShow.isEmpty()) {
+                    consolePrinter.showWordsFromList(wordsToShow, desiredWordsLength);
+                } else {
                     consolePrinter.notifyNoWordsWithSuchLengthInIterrogativeSentences();
                 }
             }
@@ -105,11 +101,83 @@ public class MainController {
     private List<Word> addAllWordsWithRequiredLength(int desiredWordsLength, Sentence sentence) {
         List<Word> requiredWords = new ArrayList<>();
         for (Word word : sentence.getWordsAsList()
-             ) {
-            if (word.length() == desiredWordsLength){
+                ) {
+            if (word.length() == desiredWordsLength) {
                 requiredWords.add(word);
             }
         }
         return requiredWords;
+    }
+
+    public void changeFirstAndLastWords() {
+        //TODO
+    }
+
+    public void sortAllWordsByAlphabet() {
+        List<Word> allWords = getAllTextWords();
+
+        Collections.sort(allWords);
+        Set<Word> allUniqWords = new LinkedHashSet<>(allWords);
+        consolePrinter.showWordsInAlphabeticOrder(allUniqWords);
+    }
+
+    private List<Word> getAllTextWords() {
+        List<Word> allWords = new ArrayList<>();
+        for (Sentence sentence : sentences
+                ) {
+            allWords.addAll(sentence.getWordsAsList());
+        }
+        return allWords;
+    }
+
+    public void sortWordsByVovelsRatio() {
+        List<Word> allWords = getAllTextWords();
+        Collections.sort(allWords, comparatorByVovelsAmout());
+        consolePrinter.showWordSortedByVovelsAmount(allWords);
+    }
+
+    private Comparator<? super Word> comparatorByVovelsAmout() {
+        return new Comparator<Word>() {
+            @Override
+            public int compare(Word o1, Word o2) {
+                return o1.vovelsAmount() - o2.vovelsAmount();
+            }
+        };
+    }
+
+    public void sortWordsStartsFromVovel() {
+        List<Word> allWords = getAllTextWords();
+        List<Word> startsWithCharacter = new ArrayList<>();
+        List<Character> wordCharacters;
+
+        for (Word word : allWords
+             ) {
+            wordCharacters = word.getWordCharactersAsList();
+            if (Word.isVovel(wordCharacters.get(0))){
+                startsWithCharacter.add(word);
+            }
+        }
+
+        Collections.sort(startsWithCharacter, comparatorByFirstNotVovel());
+        consolePrinter.showWords(startsWithCharacter);
+    }
+
+    private Comparator<? super Word> comparatorByFirstNotVovel() {
+        return new Comparator<Word>() {
+            @Override
+            public int compare(Word o1, Word o2) {
+                List<Character> o1Characters = o1.getWordCharactersAsList();
+                while (Word.isVovel(o1Characters.get(0))){
+                    o1Characters.remove(0);
+                }
+                List<Character> o2Characters = o2.getWordCharactersAsList();
+                while (Word.isVovel(o2Characters.get(0))){
+                    o2Characters.remove(0);
+                }
+                String o1ToCompare = o1Characters.get(0).toString();
+                String o2ToCompare = o2Characters.get(0).toString();
+                return o1ToCompare.compareTo(o2ToCompare);
+            }
+        };
     }
 }
