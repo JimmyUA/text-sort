@@ -26,6 +26,9 @@ public class TextLoader {
                 }
 
             }
+            if (builder.length() != 0) {
+                sentences.add(new Sentence(builder.toString().trim()));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -22,6 +22,8 @@ public class Main
         Scanner scanner = new Scanner(System.in);
         int taksNumber = scanner.nextInt();
         switch (taksNumber){
+            case 0:
+                mainController.checkWords();                         //need to be deleted
             case 1:
                 mainController.calculateAndShowAmountOfSentencesWithEqualWords();
                 break;
@@ -47,6 +49,16 @@ public class Main
                 break;
             case 8:
                 mainController.sortWordsStartsFromVovel();
+                break;
+            case 9:
+                String desiredLetter = mainController.askAndReturnDesiredLetter(scanner);
+                mainController.sortWordsByDesiredLetter(desiredLetter);
+                break;
+            case 10:
+                File file = new File("D:/words_to_find_in_text.txt");
+                mainController.countAmountWordsAppearenses(file);
+                break;
+
         }
     }
 }

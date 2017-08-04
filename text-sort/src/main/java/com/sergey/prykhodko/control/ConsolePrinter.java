@@ -5,6 +5,7 @@ import com.sergey.prykhodko.textParts.Word;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ConsolePrinter {
@@ -61,8 +62,8 @@ public class ConsolePrinter {
         }
     }
 
-    public void showWordSortedByVovelsAmount(List<Word> allWords) {
-        for (Word word : allWords
+    public void showWordSortedByVovelsAmount(List<Word> words) {
+        for (Word word : words
                 ) {
             Double ratio = word.vovelsAmount()/(word.charactersAmount() * 1.0);
             System.out.printf(word + "\u001B[31m Vovels ratio - %1.2f vovels amount: " + word.vovelsAmount() + "\u001B[0m\n", ratio);
@@ -74,5 +75,40 @@ public class ConsolePrinter {
              ) {
             System.out.println(word);
         }
+    }
+
+    public void notifyNoWordsStartsWithVovel() {
+        System.out.println("No word starts with vovel");
+    }
+
+    public void askDesiredLetter() {
+        System.out.println("Enter letter to sort words by it's amount:");
+    }
+
+    public void notifyNoWordsContainsDesiredLetter() {
+        System.out.println("No words contains desired letter");
+    }
+
+    public void showWordsSortedByAppearence(Map<Word, List<Integer>> wordsWithAppearenceInEachSentence) {
+        for (Map.Entry<Word, List<Integer>> entry: wordsWithAppearenceInEachSentence.entrySet()
+             ) {
+            List<Integer> appearences = entry.getValue();
+            int avarege = calculateAverage(appearences);
+            System.out.println(entry.getKey() + " - total appearence: " + avarege);
+            System.out.print("Each sentence appearence: ");
+            for (int i = 0; i < appearences.size(); i++) {
+                System.out.print(i+1 + ". : " + appearences.get(i) + "; ");
+            }
+            System.out.println("\n");
+        }
+    }
+
+    private int calculateAverage(List<Integer> integers) {
+        int avarege = 0;
+        for (int entry : integers
+             ) {
+            avarege += entry;
+        }
+        return avarege;
     }
 }
