@@ -42,6 +42,10 @@ public class Word implements SentenceUnit, Comparable<Word>{
         return amount;
     }
 
+    public int charactersAmount(){
+        return characters.size();
+    }
+
     public static boolean isVovel(char character) {
         for (char vovel : VOVELS
              ) {

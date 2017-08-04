@@ -64,7 +64,8 @@ public class ConsolePrinter {
     public void showWordSortedByVovelsAmount(List<Word> allWords) {
         for (Word word : allWords
                 ) {
-            System.out.println(word + "\u001B[31m vovels amount: " + word.vovelsAmount() + "\u001B[0m");
+            Double ratio = word.vovelsAmount()/(word.charactersAmount() * 1.0);
+            System.out.printf(word + "\u001B[31m Vovels ratio - %1.2f vovels amount: " + word.vovelsAmount() + "\u001B[0m\n", ratio);
         }
     }
 

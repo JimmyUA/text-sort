@@ -140,7 +140,9 @@ public class MainController {
         return new Comparator<Word>() {
             @Override
             public int compare(Word o1, Word o2) {
-                return o1.vovelsAmount() - o2.vovelsAmount();
+                Double o1Ratio = o1.vovelsAmount()/(o1.charactersAmount()*1.0);
+                Double o2Ratio = o2.vovelsAmount() * 1.0/(o2.charactersAmount()*1.0);
+                return o1Ratio.compareTo(o2Ratio);
             }
         };
     }
