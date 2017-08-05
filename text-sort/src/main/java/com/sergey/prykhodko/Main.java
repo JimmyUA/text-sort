@@ -58,6 +58,14 @@ public class Main
                 File file = new File("D:/words_to_find_in_text.txt");
                 mainController.countAmountWordsAppearenses(file);
                 break;
+            case 11:
+                String[] desiredLetters = mainController.askDesiredLettersLimitsForInterval(scanner);
+                mainController.deleteMaxIntervalFromEachSentence(desiredLetters);
+                break;
+            case 12:
+                int wordLength = mainController.askWordLength(scanner);
+                mainController.deleteWordthHasLengthAndStartsFromConsonant(wordLength);
+                break;
 
         }
     }

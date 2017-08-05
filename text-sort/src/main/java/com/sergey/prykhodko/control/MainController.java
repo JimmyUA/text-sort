@@ -6,6 +6,8 @@ import com.sergey.prykhodko.textParts.Word;
 
 import java.io.File;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainController {
 
@@ -326,5 +328,78 @@ public class MainController {
             appearences.add(appearenseInSentence);
         }
         return appearences;
+    }
+
+    public String[] askDesiredLettersLimitsForInterval(Scanner scanner) {
+        consolePrinter.askIntervalLetters();
+        scanner.nextLine();
+
+        return scanner.nextLine().split(" ");
+    }
+
+    public void deleteMaxIntervalFromEachSentence(String[] desiredLetters) {
+        List<Sentence> sentencesCopy = new ArrayList<>(sentences);
+        for (Sentence sentence : sentencesCopy
+             ) {
+            String deletedInterval = deleteMaxIntervalFromSentance(sentence, desiredLetters);
+            consolePrinter.showDeletedInterval(deletedInterval);
+            String cuttedSentence = sentence.toString().replace(deletedInterval, "");
+            consolePrinter.showCuttedSentence(cuttedSentence);
+        }
+    }
+
+    private String deleteMaxIntervalFromSentance(Sentence sentence, String[] desiredLetters) {
+        String sentenceString = sentence.toString();
+
+        List<String> intervals = new ArrayList<>();
+
+        Pattern intervalPattern = Pattern.compile("(" + desiredLetters[0] + ")(.*)(" + desiredLetters[1]  + ")", Pattern.DOTALL);
+        Matcher intervalMatcher = intervalPattern.matcher(sentenceString);
+
+        while (intervalMatcher.find()){
+            intervals.add(intervalMatcher.group());
+        }
+        Collections.sort(intervals, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o2.length() - o1.length();
+            }
+        });
+        if (intervals.size() == 0){
+            return "";
+        }
+        return intervals.get(0);
+    }
+
+    public int askWordLength(Scanner scanner) {
+        consolePrinter.askWordLength();
+        return scanner.nextInt();
+    }
+
+    public void deleteWordthHasLengthAndStartsFromConsonant(int wordLength) {
+        Set<Word> wordsToDelete = new HashSet<>();
+        List<Word> allWords = getAllTextWords();
+        for (Word word : allWords
+             ) {
+            String wordString = word.toString();
+            if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength){
+                wordsToDelete.add(word);
+            }
+        }
+        for (Sentence sentence : sentences
+             ) {
+            consolePrinter.showSentenceBefore(sentence);
+            for (Word word : wordsToDelete
+                 ) {
+                sentence = deleteWordFromSentence(sentence, word);
+            }
+            consolePrinter.showSentenceAfter(sentence);
+        }
+
+    }
+
+    private Sentence deleteWordFromSentence(Sentence sentence, Word word) {
+        String sentenceString = sentence.toString();
+        return new Sentence(sentenceString.replace(word.toString(), ""));
     }
 }

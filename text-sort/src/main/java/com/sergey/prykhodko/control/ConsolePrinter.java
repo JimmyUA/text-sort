@@ -111,4 +111,28 @@ public class ConsolePrinter {
         }
         return avarege;
     }
+
+    public void askIntervalLetters() {
+        System.out.println("Please enter limit-letters for interval to be deleted from each sentance(letter_letter):");
+    }
+
+    public void showDeletedInterval(String deletedInterval) {
+        System.out.println("Substring \u001B[31m\"" + deletedInterval + "\"\u001B[0m were deleted wrom sentence");
+    }
+
+    public void showCuttedSentence(String cuttedSentence) {
+        System.out.println("Sentense now is: \u001B[34m\"" +cuttedSentence + "\"\n\u001B[0m");
+    }
+
+    public void askWordLength() {
+        System.out.println("Please enter words to be deleted length:");
+    }
+
+    public void showSentenceBefore(Sentence sentence) {
+        System.out.println("Sentence before:\u001B[31m\n" + sentence + "\u001B[0m");
+    }
+
+    public void showSentenceAfter(Sentence sentence) {
+        System.out.println("Sentence after:\n\u001B[34m" + sentence + "\u001B[0m\n");
+    }
 }
