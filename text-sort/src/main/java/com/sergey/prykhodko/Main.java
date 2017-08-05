@@ -66,6 +66,10 @@ public class Main
                 int wordLength = mainController.askWordLength(scanner);
                 mainController.deleteWordthHasLengthAndStartsFromConsonant(wordLength);
                 break;
+            case 13:
+                desiredLetter = mainController.askAndReturnDesiredLetter(scanner);
+                mainController.sortWordsByDesiredLetterDecreasingOrder(desiredLetter);
+                break;
 
         }
     }

@@ -402,4 +402,55 @@ public class MainController {
         String sentenceString = sentence.toString();
         return new Sentence(sentenceString.replace(word.toString(), ""));
     }
+
+    public void sortWordsByDesiredLetterDecreasingOrder(String desiredLetter) {
+        List<Word> words = getAllTextWords();
+        Set<Word> wordSet = new HashSet<>(words);
+        words = new ArrayList<>(wordSet);
+        wordSet = null;
+        String withoutDesiredLetter;
+        for (int i = 1; i < words.size(); i++) {
+            withoutDesiredLetter = words.get(i).toString();
+            if (!withoutDesiredLetter.contains(desiredLetter)){
+                words.remove(i--);
+            }
+        }
+        if (!words.get(0).toString().contains(desiredLetter)){
+            words.remove(0);
+        }
+        Collections.sort(words, comparatorByDesiredLetterAmountDecreasingOrder(desiredLetter));
+        if (words.isEmpty()){
+            consolePrinter.notifyNoWordsContainsDesiredLetter();
+        }
+        consolePrinter.showWords(words);
+    }
+
+    private Comparator<? super Word> comparatorByDesiredLetterAmountDecreasingOrder(final String desiredLetter) {
+
+        return new Comparator<Word>() {
+            char requiredChar = desiredLetter.trim().charAt(0);
+            @Override
+            public int compare(Word o1, Word o2) {
+                int o1Amount = getSameCharactersAmount(o1, requiredChar);
+                int o2Amount = getSameCharactersAmount(o2, requiredChar);
+                if(o1Amount == o2Amount){
+                    return o1.toString().compareTo(o2.toString());
+                }
+
+                return o2Amount - o1Amount;
+            }
+
+            private int getSameCharactersAmount(Word word, char requiredChar) {
+                int amount = 0;
+                List<Character> characters = word.getWordCharactersAsList();
+                for (char character : characters
+                        ) {
+                    if (character == requiredChar){
+                        amount++;
+                    }
+                }
+                return amount;
+            }
+        };
+    }
 }
