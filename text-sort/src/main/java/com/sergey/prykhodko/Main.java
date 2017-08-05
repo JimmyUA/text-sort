@@ -70,7 +70,11 @@ public class Main
                 desiredLetter = mainController.askAndReturnDesiredLetter(scanner);
                 mainController.sortWordsByDesiredLetterDecreasingOrder(desiredLetter);
                 break;
-
+            case 14:
+                mainController.findMaxPolindrome();
+                break;
+            case 15:
+                mainController.removeFirstAndLastLettersFromWords();
         }
     }
 }

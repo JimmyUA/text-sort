@@ -453,4 +453,12 @@ public class MainController {
             }
         };
     }
+
+    public void findMaxPolindrome() {
+        //TODO
+    }
+
+    public void removeFirstAndLastLettersFromWords() {
+
+    }
 }
