@@ -88,10 +88,12 @@ public class MainController {
     }
 
     public void showAllWordsFromIterrogativeSentencesWithDesiredLength(int desiredWordsLength) {
+        List<Word> wordsToShow;
+
         for (Sentence sentence : sentences
                 ) {
             if (sentence.isIterrogative()) {
-                List<Word> wordsToShow = addAllWordsWithRequiredLength(desiredWordsLength, sentence);
+                wordsToShow = addAllWordsWithRequiredLength(desiredWordsLength, sentence);
                 if (!wordsToShow.isEmpty()) {
                     consolePrinter.showWordsFromList(wordsToShow, desiredWordsLength);
                 } else {
@@ -113,7 +115,29 @@ public class MainController {
     }
 
     public void changeFirstAndLastWords() {
-        //TODO
+        String sentenceString;
+        List<Word> words;
+        for (Sentence sentence : sentences
+                ) {
+            sentenceString = sentence.toString();
+            words = sentence.getWordsAsList();
+            sentenceString = changeFirstAndLastWordsInOneSentence(sentenceString, words);
+            consolePrinter.print(sentenceString);
+        }
+
+    }
+
+    private String changeFirstAndLastWordsInOneSentence(String sentence, List<Word> words) {
+        String firstWord = words.get(0).toString();
+        String lastWord = words.get(words.size() - 1).toString();
+
+        sentence = sentence.replace(lastWord, firstWord);
+
+        String cuttedSentence = sentence.substring(firstWord.length());
+
+        sentence = lastWord + cuttedSentence;
+
+        return sentence;
     }
 
     public void sortAllWordsByAlphabet() {
@@ -166,7 +190,7 @@ public class MainController {
         List<Character> wordCharacters;
 
         for (Word word : allWords
-             ) {
+                ) {
             wordCharacters = word.getWordCharactersAsList();
             if (Word.isVovel(wordCharacters.get(0))){
                 startsWithVovelSet.add(word);
@@ -218,7 +242,7 @@ public class MainController {
         List<Word> words = getAllTextWords();
         int i = 1;
         for (Word word : words
-             ) {
+                ) {
             System.out.println("" + i++ + word);
         }
     }
@@ -259,7 +283,7 @@ public class MainController {
                 int o1Amount = getSameCharactersAmount(o1, requiredChar);
                 int o2Amount = getSameCharactersAmount(o2, requiredChar);
                 if(o1Amount == o2Amount){
-                   return o1.toString().compareTo(o2.toString());
+                    return o1.toString().compareTo(o2.toString());
                 }
 
                 return o1Amount - o2Amount;
@@ -269,7 +293,7 @@ public class MainController {
                 int amount = 0;
                 List<Character> characters = word.getWordCharactersAsList();
                 for (char character : characters
-                     ) {
+                        ) {
                     if (character == requiredChar){
                         amount++;
                     }
@@ -281,11 +305,11 @@ public class MainController {
 
     public void countAmountWordsAppearenses(File file) {
         Text text = new Text();
-        text.setText(TextLoader.getTextFromFile(file));
+        text.setSentences(TextLoader.getSentencesFromFile(file));
         List<Word> wordsToFindInText = getAllTextWords(text);
         Map<Word, List<Integer>> wordsWithAppearenceInEachSentence = new TreeMap<>(comparatorByAvaredgeAppearence());
         for (Word word : wordsToFindInText
-             ) {
+                ) {
             List<Integer> appearences = getAppearencesList(word);
             wordsWithAppearenceInEachSentence.put(word, appearences);
         }
@@ -306,7 +330,7 @@ public class MainController {
                 List<Integer> appearences = getAppearencesList(word);
                 int avarege = 0;
                 for (int appearence : appearences
-                     ) {
+                        ) {
                     avarege += appearence;
                 }
                 return avarege;
@@ -317,10 +341,10 @@ public class MainController {
     private List<Integer> getAppearencesList(Word word) {
         List<Integer> appearences = new ArrayList<>();
         for (Sentence sentence : sentences
-             ) {
+                ) {
             int appearenseInSentence = 0;
             for (Word entry : sentence.getWordsAsList()
-                 ) {
+                    ) {
                 if (entry.equals(word)){
                     appearenseInSentence++;
                 }
@@ -340,7 +364,7 @@ public class MainController {
     public void deleteMaxIntervalFromEachSentence(String[] desiredLetters) {
         List<Sentence> sentencesCopy = new ArrayList<>(sentences);
         for (Sentence sentence : sentencesCopy
-             ) {
+                ) {
             String deletedInterval = deleteMaxIntervalFromSentance(sentence, desiredLetters);
             consolePrinter.showDeletedInterval(deletedInterval);
             String cuttedSentence = sentence.toString().replace(deletedInterval, "");
@@ -380,17 +404,24 @@ public class MainController {
         Set<Word> wordsToDelete = new HashSet<>();
         List<Word> allWords = getAllTextWords();
         for (Word word : allWords
-             ) {
+                ) {
             String wordString = word.toString();
             if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength){
                 wordsToDelete.add(word);
             }
         }
         for (Sentence sentence : sentences
-             ) {
+                ) {
             consolePrinter.showSentenceBefore(sentence);
+
+            if (wordsToDelete.isEmpty()){
+                consolePrinter.notifyNoWordsWithSuchLengthInSentences();
+            }else {
+                consolePrinter.showWordsWillBeDeleted(wordsToDelete);
+            }
+
             for (Word word : wordsToDelete
-                 ) {
+                    ) {
                 sentence = deleteWordFromSentence(sentence, word);
             }
             consolePrinter.showSentenceAfter(sentence);
@@ -459,7 +490,7 @@ public class MainController {
         StringBuilder builder = new StringBuilder();
 
         for (Word word : allWords
-             ) {
+                ) {
             builder.append(word.toString());
         }
 
@@ -515,7 +546,7 @@ public class MainController {
         List<Word> wordsWithNoLetters = new ArrayList<>();
 
         for (Word word : allWords
-             ) {
+                ) {
             consolePrinter.showWordBeforeDeletion(word);
             word = deleteLastAndFirstLettersFromWord(word);
             consolePrinter.showWordAfterDeletion(word);
@@ -525,19 +556,19 @@ public class MainController {
 
     private Word deleteLastAndFirstLettersFromWord(Word word) {
         if (word.toString().length() > 3){
-        List<Character> allLetters = word.getWordCharactersAsList();
-        Character first = allLetters.get(0);
-        Character last = allLetters.get(allLetters.size() - 1);
-        String wordString = word.toString();
-        String wordWithNoFirstAndLastLetter = wordString.substring(1, wordString.length() - 1);
-        wordWithNoFirstAndLastLetter = wordWithNoFirstAndLastLetter.replace(first.toString().toLowerCase(), "").
-                replace(last.toString().toLowerCase(), "");
+            List<Character> allLetters = word.getWordCharactersAsList();
+            Character first = allLetters.get(0);
+            Character last = allLetters.get(allLetters.size() - 1);
+            String wordString = word.toString();
+            String wordWithNoFirstAndLastLetter = wordString.substring(1, wordString.length() - 1);
+            wordWithNoFirstAndLastLetter = wordWithNoFirstAndLastLetter.replace(first.toString().toLowerCase(), "").
+                    replace(last.toString().toLowerCase(), "");
 
-        String result = first.toString() + wordWithNoFirstAndLastLetter + last.toString();
+            String result = first.toString() + wordWithNoFirstAndLastLetter + last.toString();
             return new Word(result);
         }
         else {
-           return word;
+            return word;
         }
 
     }
@@ -555,6 +586,10 @@ public class MainController {
     public void showSentenceWithGivenSubstringInsteadOfWordsWithGivenLength(
             int desiredSentenceNumber, int goalWordsLength, String substringForReplacing) {
 
+        if (desiredSentenceNumber - 1 > sentences.size()){
+            consolePrinter.notifyThereAreLessSentenses(sentences.size() + 1);
+            return;
+        }
         Sentence desiredSentence = sentences.get(desiredSentenceNumber - 1);
         List<Word> words = desiredSentence.getWordsAsList();
 
@@ -563,7 +598,7 @@ public class MainController {
         consolePrinter.showSentenceBefore(desiredSentence);
 
         for (Word word : words
-             ) {
+                ) {
             String wordString = word.toString();
             if (wordString.length() == goalWordsLength){
                 sentence = sentence.replace(wordString, substringForReplacing);
@@ -571,5 +606,20 @@ public class MainController {
         }
         consolePrinter.showSentenceAfter(new Sentence(sentence));
 
+    }
+
+    public boolean areIterrogativeSentencesPresent() {
+        for (Sentence sentence: sentences
+                ) {
+            String sentenceString = sentence.toString();
+            if (sentenceString.charAt(sentenceString.length() - 1) == '?'){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void printNoIterrogativeSentences() {
+        consolePrinter.notifyNoIterrogativeSentences();
     }
 }
