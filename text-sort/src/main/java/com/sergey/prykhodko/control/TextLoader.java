@@ -5,10 +5,14 @@ import com.sergey.prykhodko.textParts.Sentence;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TextLoader {
 
-    public static List<Sentence> getTextFromFile(File fileWithGoalText){
+    private static final String SENTENCE_REG_EX = "(.*?)[.?!]([\\s\\n])";
+
+    public static List<Sentence> getSentencesFromFile(File fileWithGoalText){
         List<Sentence> sentences = new ArrayList<>();
 
         try(InputStream in = new FileInputStream(fileWithGoalText)){
@@ -20,15 +24,20 @@ public class TextLoader {
 
             while ((i = in.read()) != -1){
                 builder.append((char)i);
-                if ((i == 46 || i == 33 || i == 63) && builder.length() > minLength){
-                    sentences.add(new Sentence(builder.toString().trim()));
-                    builder = new StringBuilder();
-                }
 
             }
-            if (builder.length() != 0) {
-                sentences.add(new Sentence(builder.toString().trim()));
+            String text = builder.toString();
+
+            Pattern sentencePattern = Pattern.compile(SENTENCE_REG_EX, Pattern.MULTILINE|Pattern.DOTALL);
+            Matcher sentenceMatcer = sentencePattern.matcher(text);
+
+            while (sentenceMatcer.find()){
+                sentences.add(new Sentence(sentenceMatcer.group().replace("\n", "")));
             }
+            if (sentences.isEmpty()){
+                sentences.add(new Sentence(text));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
