@@ -16,8 +16,7 @@ public class Main
     public static void main( String[] args )
     {
         Text textToWorkWith = new Text();
-        textToWorkWith.setText(TextLoader.getTextFromFile(new File("D:/COPYRIGHT")));
-
+        
         MainController mainController = new MainController(textToWorkWith);
         Scanner scanner = new Scanner(System.in);
         int taksNumber = scanner.nextInt();
