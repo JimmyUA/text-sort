@@ -9,12 +9,9 @@ import java.util.Scanner;
 
 /**
  * Hello world!
- *
  */
-public class Main
-{
-    public static void main( String[] args )
-    {
+public class Main {
+    public static void main(String[] args) {
         Text textToWorkWith = new Text();
         textToWorkWith.setSentences(TextLoader.getSentencesFromFile(new File("D:/COPYRIGHT")));
 
@@ -39,15 +36,7 @@ public class Main
                     mainController.findWordInFirstSentanceWichIsUnicForText();
                     break;
                 case 4:
-                    int desiredWordsLength;
-                    if (mainController.areIterrogativeSentencesPresent()) {
-                        mainController.askUserDesiredWordsLength();
-                        desiredWordsLength = scanner.nextInt();
-                        mainController.showAllWordsFromIterrogativeSentencesWithDesiredLength(desiredWordsLength);
-                    }
-                    else {
-                        mainController.printNoIterrogativeSentences();
-                    }
+                    executeTask4(mainController, scanner);
                     break;
 
                 case 5:
@@ -76,7 +65,7 @@ public class Main
                     break;
                 case 12:
                     int wordLength = mainController.askWordLength(scanner);
-                    mainController.deleteWordthHasLengthAndStartsFromConsonant(wordLength);
+                    mainController.deleteWordsHasLengthAndStartsFromConsonant(wordLength);
                     break;
                 case 13:
                     desiredLetter = mainController.askAndReturnDesiredLetter(scanner);
@@ -90,11 +79,22 @@ public class Main
                     break;
                 case 16:
                     int desiredSentenceNumber = mainController.askAndReturnDesiredSentenceNumber(scanner);
-                    desiredWordsLength = mainController.askWordLength(scanner);
+                    int desiredWordsLength = mainController.askWordLength(scanner);
                     String substringForReplacing = mainController.askAndReturnDesiredSubstring(scanner);
                     mainController.showSentenceWithGivenSubstringInsteadOfWordsWithGivenLength(desiredSentenceNumber, desiredWordsLength, substringForReplacing);
                     break;
             }
-        }while (taksNumber != -1);
+        } while (taksNumber != -1);
+    }
+
+    private static void executeTask4(MainController mainController, Scanner scanner) {
+        int desiredWordsLength;
+        if (mainController.areIterrogativeSentencesPresent()) {
+            mainController.askUserDesiredWordsLength();
+            desiredWordsLength = scanner.nextInt();
+            mainController.showAllWordsFromIterrogativeSentencesWithDesiredLength(desiredWordsLength);
+        } else {
+            mainController.printNoIterrogativeSentences();
+        }
     }
 }

@@ -19,6 +19,10 @@ public class MainController {
         consolePrinter = new ConsolePrinter();
     }
 
+    /*******************************************************************************
+     *************************** Task # 1 ******************************************
+     *******************************************************************************/
+
     public void calculateAndShowAmountOfSentencesWithEqualWords() {
         int sentencesWithEqualWordsAmount = 0;
         for (Sentence sentence : sentences
@@ -43,6 +47,10 @@ public class MainController {
         return false;
     }
 
+    /*******************************************************************************
+     *************************** Task # 2 ******************************************
+     *******************************************************************************/
+
     public void showSentenceInWordsAmountIncreasingOrder() {
         List<Sentence> sortedSentences = new ArrayList<>(sentences);
         Comparator<Sentence> wordsAmountIncreasingOrderComparator = new Comparator<Sentence>() {
@@ -56,6 +64,10 @@ public class MainController {
 
         consolePrinter.showSentences(sortedSentences);
     }
+
+    /*******************************************************************************
+     *************************** Task # 3 ******************************************
+     *******************************************************************************/
 
     public void findWordInFirstSentanceWichIsUnicForText() {
         Sentence firstSentence = sentences.get(0);
@@ -82,6 +94,20 @@ public class MainController {
         }
     }
 
+    /*******************************************************************************
+     *************************** Task # 4 ******************************************
+     *******************************************************************************/
+
+    public boolean areIterrogativeSentencesPresent() {
+        for (Sentence sentence : sentences
+                ) {
+            String sentenceString = sentence.toString();
+            if (sentenceString.charAt(sentenceString.length() - 1) == '?') {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void askUserDesiredWordsLength() {
         consolePrinter.showQuestionRegardingDesiredWordsLength();
@@ -103,16 +129,13 @@ public class MainController {
         }
     }
 
-    private List<Word> addAllWordsWithRequiredLength(int desiredWordsLength, Sentence sentence) {
-        List<Word> requiredWords = new ArrayList<>();
-        for (Word word : sentence.getWordsAsList()
-                ) {
-            if (word.length() == desiredWordsLength) {
-                requiredWords.add(word);
-            }
-        }
-        return requiredWords;
+    public void printNoIterrogativeSentences() {
+        consolePrinter.notifyNoIterrogativeSentences();
     }
+
+    /*******************************************************************************
+     *************************** Task # 5 ******************************************
+     *******************************************************************************/
 
     public void changeFirstAndLastWords() {
         String sentenceString;
@@ -140,6 +163,11 @@ public class MainController {
         return sentence;
     }
 
+
+    /*******************************************************************************
+     *************************** Task # 6 ******************************************
+     *******************************************************************************/
+
     public void sortAllWordsByAlphabet() {
         List<Word> allWords = getAllTextWords();
 
@@ -148,24 +176,9 @@ public class MainController {
         consolePrinter.showWordsInAlphabeticOrder(allUniqWords);
     }
 
-    private List<Word> getAllTextWords() {
-        List<Word> allWords = new ArrayList<>();
-        for (Sentence sentence : sentences
-                ) {
-            allWords.addAll(sentence.getWordsAsList());
-        }
-        return allWords;
-    }
-
-    private List<Word> getAllTextWords(Text text) {
-        List<Sentence> sentencesList = text.getSentencesAsList();
-        List<Word> allWords = new ArrayList<>();
-        for (Sentence sentence : sentencesList
-                ) {
-            allWords.addAll(sentence.getWordsAsList());
-        }
-        return allWords;
-    }
+    /*******************************************************************************
+     *************************** Task # 7 ******************************************
+     *******************************************************************************/
 
     public void sortWordsByVovelsRatio() {
         List<Word> allWords = getAllTextWords();
@@ -177,12 +190,16 @@ public class MainController {
         return new Comparator<Word>() {
             @Override
             public int compare(Word o1, Word o2) {
-                Double o1Ratio = o1.vovelsAmount()/(o1.charactersAmount()*1.0);
-                Double o2Ratio = o2.vovelsAmount() * 1.0/(o2.charactersAmount()*1.0);
+                Double o1Ratio = o1.vovelsAmount() / (o1.charactersAmount() * 1.0);
+                Double o2Ratio = o2.vovelsAmount() * 1.0 / (o2.charactersAmount() * 1.0);
                 return o1Ratio.compareTo(o2Ratio);
             }
         };
     }
+
+    /*******************************************************************************
+     *************************** Task # 8 ******************************************
+     *******************************************************************************/
 
     public void sortWordsStartsFromVovel() {
         List<Word> allWords = getAllTextWords();
@@ -192,11 +209,11 @@ public class MainController {
         for (Word word : allWords
                 ) {
             wordCharacters = word.getWordCharactersAsList();
-            if (Word.isVovel(wordCharacters.get(0))){
+            if (Word.isVovel(wordCharacters.get(0))) {
                 startsWithVovelSet.add(word);
             }
         }
-        if (startsWithVovelSet.isEmpty()){
+        if (startsWithVovelSet.isEmpty()) {
             consolePrinter.notifyNoWordsStartsWithVovel();
         }
 
@@ -213,9 +230,9 @@ public class MainController {
 //                if (o1Characters.size() == 0){
 //                    return -1;
 //                }
-                while (Word.isVovel(o1Characters.get(0))){
+                while (Word.isVovel(o1Characters.get(0))) {
                     o1Characters.remove(0);
-                    if (o1Characters.size() == 0){
+                    if (o1Characters.size() == 0) {
                         o1Characters.add('z');
                         break;
                     }
@@ -224,9 +241,9 @@ public class MainController {
 //                if (o2Characters.size() == 0){
 //                    return -1;
 //                }
-                while (Word.isVovel(o2Characters.get(0))){
+                while (Word.isVovel(o2Characters.get(0))) {
                     o2Characters.remove(0);
-                    if (o2Characters.size() == 0){
+                    if (o2Characters.size() == 0) {
                         o2Characters.add('z');
                         break;
                     }
@@ -238,14 +255,20 @@ public class MainController {
         };
     }
 
-    public void checkWords() {
-        List<Word> words = getAllTextWords();
-        int i = 1;
-        for (Word word : words
+    private List<Word> addAllWordsWithRequiredLength(int desiredWordsLength, Sentence sentence) {
+        List<Word> requiredWords = new ArrayList<>();
+        for (Word word : sentence.getWordsAsList()
                 ) {
-            System.out.println("" + i++ + " " + word);
+            if (word.length() == desiredWordsLength) {
+                requiredWords.add(word);
+            }
         }
+        return requiredWords;
     }
+
+    /*******************************************************************************
+     *************************** Task # 9 ******************************************
+     *******************************************************************************/
 
     public String askAndReturnDesiredLetter(Scanner scanner) {
         consolePrinter.askDesiredLetter();
@@ -256,19 +279,18 @@ public class MainController {
         List<Word> words = getAllTextWords();
         Set<Word> wordSet = new HashSet<>(words);
         words = new ArrayList<>(wordSet);
-        wordSet = null;
         String withoutDesiredLetter;
         for (int i = 1; i < words.size(); i++) {
             withoutDesiredLetter = words.get(i).toString();
-            if (!withoutDesiredLetter.contains(desiredLetter)){
+            if (!withoutDesiredLetter.contains(desiredLetter)) {
                 words.remove(i--);
             }
         }
-        if (!words.get(0).toString().contains(desiredLetter)){
+        if (!words.get(0).toString().contains(desiredLetter)) {
             words.remove(0);
         }
         Collections.sort(words, comparatorByDesiredLetterAmount(desiredLetter));
-        if (words.isEmpty()){
+        if (words.isEmpty()) {
             consolePrinter.notifyNoWordsContainsDesiredLetter();
         }
         consolePrinter.showWords(words);
@@ -278,11 +300,12 @@ public class MainController {
 
         return new Comparator<Word>() {
             char requiredChar = desiredLetter.trim().charAt(0);
+
             @Override
             public int compare(Word o1, Word o2) {
                 int o1Amount = getSameCharactersAmount(o1, requiredChar);
                 int o2Amount = getSameCharactersAmount(o2, requiredChar);
-                if(o1Amount == o2Amount){
+                if (o1Amount == o2Amount) {
                     return o1.toString().compareTo(o2.toString());
                 }
 
@@ -294,7 +317,7 @@ public class MainController {
                 List<Character> characters = word.getWordCharactersAsList();
                 for (char character : characters
                         ) {
-                    if (character == requiredChar){
+                    if (character == requiredChar) {
                         amount++;
                     }
                 }
@@ -302,6 +325,10 @@ public class MainController {
             }
         };
     }
+
+    /*******************************************************************************
+     *************************** Task # 10 ******************************************
+     *******************************************************************************/
 
     public void countAmountWordsAppearenses(File file) {
         Text text = new Text();
@@ -345,7 +372,7 @@ public class MainController {
             int appearenseInSentence = 0;
             for (Word entry : sentence.getWordsAsList()
                     ) {
-                if (entry.equals(word)){
+                if (entry.equals(word)) {
                     appearenseInSentence++;
                 }
             }
@@ -353,6 +380,10 @@ public class MainController {
         }
         return appearences;
     }
+
+    /*******************************************************************************
+     *************************** Task # 11 ******************************************
+     *******************************************************************************/
 
     public String[] askDesiredLettersLimitsForInterval(Scanner scanner) {
         consolePrinter.askIntervalLetters();
@@ -377,10 +408,10 @@ public class MainController {
 
         List<String> intervals = new ArrayList<>();
 
-        Pattern intervalPattern = Pattern.compile("(" + desiredLetters[0] + ")(.*)(" + desiredLetters[1]  + ")", Pattern.DOTALL);
+        Pattern intervalPattern = Pattern.compile("(" + desiredLetters[0] + ")(.*)(" + desiredLetters[1] + ")", Pattern.DOTALL);
         Matcher intervalMatcher = intervalPattern.matcher(sentenceString);
 
-        while (intervalMatcher.find()){
+        while (intervalMatcher.find()) {
             intervals.add(intervalMatcher.group());
         }
         Collections.sort(intervals, new Comparator<String>() {
@@ -389,18 +420,22 @@ public class MainController {
                 return o2.length() - o1.length();
             }
         });
-        if (intervals.size() == 0){
+        if (intervals.size() == 0) {
             return "";
         }
         return intervals.get(0);
     }
+
+    /*******************************************************************************
+     *************************** Task # 12 ******************************************
+     *******************************************************************************/
 
     public int askWordLength(Scanner scanner) {
         consolePrinter.askWordLength();
         return scanner.nextInt();
     }
 
-    public void deleteWordthHasLengthAndStartsFromConsonant(int wordLength) {
+    public void deleteWordsHasLengthAndStartsFromConsonant(int wordLength) {
         Set<Word> wordsToDelete;
         List<Word> allWords;
 
@@ -413,14 +448,14 @@ public class MainController {
             for (Word word : allWords
                     ) {
                 String wordString = word.toString();
-                if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength){
+                if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength) {
                     wordsToDelete.add(word);
                 }
             }
 
-            if (wordsToDelete.isEmpty()){
+            if (wordsToDelete.isEmpty()) {
                 consolePrinter.notifyNoWordsWithSuchLengthInSentences();
-            }else {
+            } else {
                 consolePrinter.showWordsWillBeDeleted(wordsToDelete);
             }
 
@@ -438,23 +473,26 @@ public class MainController {
         return new Sentence(sentenceString.replace(word.toString(), ""));
     }
 
+    /*******************************************************************************
+     *************************** Task # 13 ******************************************
+     *******************************************************************************/
+
     public void sortWordsByDesiredLetterDecreasingOrder(String desiredLetter) {
         List<Word> words = getAllTextWords();
         Set<Word> wordSet = new HashSet<>(words);
         words = new ArrayList<>(wordSet);
-        wordSet = null;
         String withoutDesiredLetter;
         for (int i = 1; i < words.size(); i++) {
             withoutDesiredLetter = words.get(i).toString();
-            if (!withoutDesiredLetter.contains(desiredLetter)){
+            if (!withoutDesiredLetter.contains(desiredLetter)) {
                 words.remove(i--);
             }
         }
-        if (!words.get(0).toString().contains(desiredLetter)){
+        if (!words.get(0).toString().contains(desiredLetter)) {
             words.remove(0);
         }
         Collections.sort(words, comparatorByDesiredLetterAmountDecreasingOrder(desiredLetter));
-        if (words.isEmpty()){
+        if (words.isEmpty()) {
             consolePrinter.notifyNoWordsContainsDesiredLetter();
         }
         consolePrinter.showWords(words);
@@ -464,11 +502,12 @@ public class MainController {
 
         return new Comparator<Word>() {
             char requiredChar = desiredLetter.trim().charAt(0);
+
             @Override
             public int compare(Word o1, Word o2) {
                 int o1Amount = getSameCharactersAmount(o1, requiredChar);
                 int o2Amount = getSameCharactersAmount(o2, requiredChar);
-                if(o1Amount == o2Amount){
+                if (o1Amount == o2Amount) {
                     return o1.toString().compareTo(o2.toString());
                 }
 
@@ -480,7 +519,7 @@ public class MainController {
                 List<Character> characters = word.getWordCharactersAsList();
                 for (char character : characters
                         ) {
-                    if (character == requiredChar){
+                    if (character == requiredChar) {
                         amount++;
                     }
                 }
@@ -488,6 +527,10 @@ public class MainController {
             }
         };
     }
+
+    /*******************************************************************************
+     *************************** Task # 14 ******************************************
+     *******************************************************************************/
 
     public void findMaxPolindrome() {
         List<Word> allWords = getAllTextWords();
@@ -507,47 +550,47 @@ public class MainController {
     private void findMaxPolindromeFromWord(Word word) {
         int stringLength = word.length();
         String wordString = word.toString();
-        String longestPolindrome = wordString.substring(0,1);
-        for (int i = 0; i < stringLength -1; i++) {
+        String longestPolindrome = wordString.substring(0, 1);
+        for (int i = 0; i < stringLength - 1; i++) {
             String first = expandSides(wordString, i, i);
-            if (first.length() > longestPolindrome.length()){
+            if (first.length() > longestPolindrome.length()) {
                 longestPolindrome = first;
             }
 
             String second = expandSides(wordString, i, i + 1);
-            if (first.length() > longestPolindrome.length()){
+            if (second.length() > longestPolindrome.length()) {
                 longestPolindrome = first;
             }
         }
 
-        if (longestPolindrome.equals(wordString.substring(0,1))){
+        if (longestPolindrome.equals(wordString.substring(0, 1))) {
             consolePrinter.notifyNoPolindromes();
-        }
-        else{
+        } else {
             consolePrinter.showPolindrome(new Word(longestPolindrome));
         }
     }
 
     private String expandSides(String word, int leftSide, int rightSide) {         //  asdfghgfdsa
         int length = word.length();
-        while (leftSide >= 0 && rightSide < length && word.charAt(leftSide) == word.charAt(rightSide)){
+        while (leftSide >= 0 && rightSide < length && word.charAt(leftSide) == word.charAt(rightSide)) {
             leftSide--;
             rightSide++;
         }
         int start = leftSide + 1;
         int end = rightSide - 1;
-        if (end < start){
+        if (end < start) {
             return "";
-        }
-        else {
+        } else {
             return word.substring(leftSide + 1, rightSide);
         }
     }
 
+    /*******************************************************************************
+     *************************** Task # 15 ******************************************
+     *******************************************************************************/
 
     public void removeFirstAndLastLettersFromWords() {
         List<Word> allWords = getAllTextWords();
-        List<Word> wordsWithNoLetters = new ArrayList<>();
 
         for (Word word : allWords
                 ) {
@@ -559,7 +602,7 @@ public class MainController {
     }
 
     private Word deleteLastAndFirstLettersFromWord(Word word) {
-        if (word.toString().length() > 3){
+        if (word.toString().length() > 3) {
             List<Character> allLetters = word.getWordCharactersAsList();
             Character first = allLetters.get(0);
             Character last = allLetters.get(allLetters.size() - 1);
@@ -570,12 +613,15 @@ public class MainController {
 
             String result = first.toString() + wordWithNoFirstAndLastLetter + last.toString();
             return new Word(result);
-        }
-        else {
+        } else {
             return word;
         }
 
     }
+
+    /*******************************************************************************
+     *************************** Task # 16 ******************************************
+     *******************************************************************************/
 
     public int askAndReturnDesiredSentenceNumber(Scanner scanner) {
         consolePrinter.askDesiredSentenceNumber();
@@ -590,7 +636,7 @@ public class MainController {
     public void showSentenceWithGivenSubstringInsteadOfWordsWithGivenLength(
             int desiredSentenceNumber, int goalWordsLength, String substringForReplacing) {
 
-        if (desiredSentenceNumber - 1 > sentences.size()){
+        if (desiredSentenceNumber - 1 > sentences.size()) {
             consolePrinter.notifyThereAreLessSentenses(sentences.size() + 1);
             return;
         }
@@ -604,7 +650,7 @@ public class MainController {
         for (Word word : words
                 ) {
             String wordString = word.toString();
-            if (wordString.length() == goalWordsLength){
+            if (wordString.length() == goalWordsLength) {
                 sentence = sentence.replace(wordString, substringForReplacing);
             }
         }
@@ -612,22 +658,39 @@ public class MainController {
 
     }
 
-    public boolean areIterrogativeSentencesPresent() {
-        for (Sentence sentence: sentences
-                ) {
-            String sentenceString = sentence.toString();
-            if (sentenceString.charAt(sentenceString.length() - 1) == '?'){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void printNoIterrogativeSentences() {
-        consolePrinter.notifyNoIterrogativeSentences();
-    }
+    /*******************************************************************************
+     *************************** system methods*************************************
+     *******************************************************************************/
 
     public void showCommandVariants() {
         consolePrinter.printCommandVariants();
+    }
+
+    private List<Word> getAllTextWords() {
+        List<Word> allWords = new ArrayList<>();
+        for (Sentence sentence : sentences
+                ) {
+            allWords.addAll(sentence.getWordsAsList());
+        }
+        return allWords;
+    }
+
+    private List<Word> getAllTextWords(Text text) {
+        List<Sentence> sentencesList = text.getSentencesAsList();
+        List<Word> allWords = new ArrayList<>();
+        for (Sentence sentence : sentencesList
+                ) {
+            allWords.addAll(sentence.getWordsAsList());
+        }
+        return allWords;
+    }
+
+    public void checkWords() {
+        List<Word> words = getAllTextWords();
+        int i = 1;
+        for (Word word : words
+                ) {
+            System.out.println("" + i++ + " " + word);
+        }
     }
 }

@@ -27,23 +27,23 @@ public class Sentence {
         Pattern punctuationUnitPattern = Pattern.compile(SentenceUnit.PUNCTUATION_UNIT_REG_EX);
         Matcher punctuationUnitMatcher = punctuationUnitPattern.matcher(sentence);
 
-        while (punctuationUnitMatcher.find()){
+        while (punctuationUnitMatcher.find()) {
             punctuationUnits.add(new PunctuationUnit(punctuationUnitMatcher.group().charAt(0)));
         }
     }
 
-    private void getAllWords(){
+    private void getAllWords() {
         Pattern wordPattern = Pattern.compile(SentenceUnit.WORD_REG_EX);
         Matcher wordMatcher = wordPattern.matcher(sentence);
         String match;
-        while (wordMatcher.find()){
+        while (wordMatcher.find()) {
             if ((match = wordMatcher.group()).length() > 1) {
                 words.add(new Word(wordMatcher.group().toLowerCase()));
             }
         }
     }
 
-    public boolean isIterrogative(){
+    public boolean isIterrogative() {
         return punctuationUnits.contains(new PunctuationUnit('?'));
     }
 

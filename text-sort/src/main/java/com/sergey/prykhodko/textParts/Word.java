@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Word implements SentenceUnit, Comparable<Word>{
+public class Word implements SentenceUnit, Comparable<Word> {
     private String word;
     private List<Character> characters;
     private static final char[] VOVELS = {'a', 'o', 'e', 'u', 'i', 'y', 'а', 'э', 'є', 'і', 'ї', 'о', 'и', 'у', 'е', 'ы', 'я', 'ю'};
@@ -19,37 +19,37 @@ public class Word implements SentenceUnit, Comparable<Word>{
         char[] chars = word.toCharArray();
         List<Character> allCharacters = new ArrayList<>();
         for (char entry : chars
-              ) {
+                ) {
             allCharacters.add(entry);
         }
         return allCharacters;
 
     }
 
-    public int length(){
+    public int length() {
         return word.length();
 
     }
 
-    public int vovelsAmount(){
+    public int vovelsAmount() {
         int amount = 0;
         for (char character : characters
-             ) {
-            if (isVovel(character)){
+                ) {
+            if (isVovel(character)) {
                 amount++;
             }
         }
         return amount;
     }
 
-    public int charactersAmount(){
+    public int charactersAmount() {
         return characters.size();
     }
 
     public static boolean isVovel(char character) {
         for (char vovel : VOVELS
-             ) {
-            if (character == vovel){
+                ) {
+            if (character == vovel) {
                 return true;
             }
         }
