@@ -19,6 +19,8 @@ public class Main
         textToWorkWith.setSentences(TextLoader.getSentencesFromFile(new File("D:/COPYRIGHT")));
 
         MainController mainController = new MainController(textToWorkWith);
+        mainController.showCommandVariants();
+
         Scanner scanner = new Scanner(System.in);
         int taksNumber;
         do {

@@ -243,7 +243,7 @@ public class MainController {
         int i = 1;
         for (Word word : words
                 ) {
-            System.out.println("" + i++ + word);
+            System.out.println("" + i++ + " " + word);
         }
     }
 
@@ -401,18 +401,22 @@ public class MainController {
     }
 
     public void deleteWordthHasLengthAndStartsFromConsonant(int wordLength) {
-        Set<Word> wordsToDelete = new HashSet<>();
-        List<Word> allWords = getAllTextWords();
-        for (Word word : allWords
-                ) {
-            String wordString = word.toString();
-            if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength){
-                wordsToDelete.add(word);
-            }
-        }
+        Set<Word> wordsToDelete;
+        List<Word> allWords;
+
         for (Sentence sentence : sentences
                 ) {
             consolePrinter.showSentenceBefore(sentence);
+
+            wordsToDelete = new HashSet<>();
+            allWords = sentence.getWordsAsList();
+            for (Word word : allWords
+                    ) {
+                String wordString = word.toString();
+                if (!Word.isVovel(wordString.charAt(0)) && wordString.length() == wordLength){
+                    wordsToDelete.add(word);
+                }
+            }
 
             if (wordsToDelete.isEmpty()){
                 consolePrinter.notifyNoWordsWithSuchLengthInSentences();
@@ -621,5 +625,9 @@ public class MainController {
 
     public void printNoIterrogativeSentences() {
         consolePrinter.notifyNoIterrogativeSentences();
+    }
+
+    public void showCommandVariants() {
+        consolePrinter.printCommandVariants();
     }
 }

@@ -185,4 +185,9 @@ public class ConsolePrinter {
         }
         System.out.println("\b\b");
     }
+
+    public void printCommandVariants() {
+        System.out.println("////////////////////////////////WELCOME TO TEXT PARSER////////////////////////////////////////////" +
+                "\nenter number of the task you want to execute or 0 - to see all words, -1 - to exit");
+    }
 }
