@@ -15,7 +15,8 @@ public class TextLoader {
     public static List<Sentence> getSentencesFromFile(File fileWithGoalText){
         List<Sentence> sentences = new ArrayList<>();
 
-        try(InputStream in = new FileInputStream(fileWithGoalText)){
+        try(Reader in = new BufferedReader(new InputStreamReader(new FileInputStream(fileWithGoalText),
+                "UTF-8"))){
             int i;
             int count = 0;
             int minLength = 2;

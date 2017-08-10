@@ -8,7 +8,7 @@ import java.util.List;
 public class Word implements SentenceUnit, Comparable<Word>{
     private String word;
     private List<Character> characters;
-    private static final char[] VOVELS = {'a', 'o', 'e', 'u', 'i', 'y'};
+    private static final char[] VOVELS = {'a', 'o', 'e', 'u', 'i', 'y', 'а', 'э', 'є', 'і', 'ї', 'о', 'и', 'у', 'е', 'ы', 'я', 'ю'};
 
     public Word(String word) {
         this.word = word;

@@ -13,7 +13,8 @@ public class ConsolePrinter {
     public void showSentences(List<Sentence> sentences) {
         for (Sentence sentence : sentences
                 ) {
-            System.out.println("" + sentence + "\u001B[31m words amount: " + sentence.getWordsAsList().size() + "\u001B[0m");
+            System.out.println("" + sentence + "\u001B[31m words amount: " +
+                    sentence.getWordsAsList().size() + "\u001B[0m\n");
         }
     }
 
@@ -157,7 +158,7 @@ public class ConsolePrinter {
     }
 
     public void showPolindrome(Word longestPolindrome) {
-        System.out.println("The longest polindrome in this text is: " + longestPolindrome);
+        System.out.println("The longest polindrome in this text is: " + "\u001B[35m" +longestPolindrome);
     }
 
     public void notifyThereAreLessSentenses(int size) {
