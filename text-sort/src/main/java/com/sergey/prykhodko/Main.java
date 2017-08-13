@@ -75,6 +75,13 @@ public class Main
                 break;
             case 15:
                 mainController.removeFirstAndLastLettersFromWords();
+
+            case 16:
+                int desiredSentenceNumber = mainController.askAndReturnDesiredSentenceNumber(scanner);
+                desiredWordsLength = mainController.askWordLength(scanner);
+                String substringForReplacing = mainController.askAndReturnDesiredSubstring(scanner);
+                mainController.showSentenceWithGivenSubstringInsteadOfWordsWithGivenLength(desiredSentenceNumber, desiredWordsLength, substringForReplacing);
+                break;
         }
     }
 }
