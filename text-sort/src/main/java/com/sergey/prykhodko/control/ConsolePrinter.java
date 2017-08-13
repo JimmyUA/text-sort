@@ -135,4 +135,28 @@ public class ConsolePrinter {
     public void showSentenceAfter(Sentence sentence) {
         System.out.println("Sentence after:\n\u001B[34m" + sentence + "\u001B[0m\n");
     }
+
+    public void showWordBeforeDeletion(Word word) {
+        System.out.print("\u001B[34m" + word + "\u001B[0m  - ");
+    }
+
+    public void showWordAfterDeletion(Word word) {
+        System.out.println("\u001B[31m" + word + "\u001B[0m");
+    }
+
+    public void askDesiredSentenceNumber() {
+        System.out.println("Please enter sentence number were words should be replaced:");
+    }
+
+    public void askSubstringForReplacing() {
+        System.out.println("Please enter substring to replace words with in given sentence:");
+    }
+
+    public void notifyNoPolindromes() {
+        System.out.println("No Polindrome were found");
+    }
+
+    public void showPolindrome(Word longestPolindrome) {
+        System.out.println("The longest polindrome in this text is: " + longestPolindrome);
+    }
 }
